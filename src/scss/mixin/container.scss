@@ -1,0 +1,60 @@
+@mixin media($type) {
+  @if $type == 'mobile' {
+    @media screen and (max-width: 690px){
+      @content;
+    }
+  }
+
+  @else if $type == 'tablet' {
+		@media screen and (min-width: 691px) and (max-width: 1180px){
+      @content;
+    }
+  }
+  @else if $type == 'desktop' {
+    @media screen and (min-width: 1181px){
+      @content;
+    }
+  }
+}
+
+@mixin ATransition($value) {
+  will-change: auto;
+  transition: $value;
+  -o-transition: $value;
+  -moz-transition: $value;
+  -ms-transition: $value;
+  -webkit-transition: $value;
+}
+@mixin ADelay($value){
+  transition-delay: $value;
+  -o-transition-delay: $value;
+  -ms-transition-delay: $value;
+  -moz-transition-delay: $value;
+  -webkit-transition-delay: $value;
+}
+
+@mixin ATransform($value) {
+  transform: $value;
+  -o-transform: $value;
+  -ms-transform: $value;
+  -moz-transform: $value;
+  -webkit-transform: $value;
+}
+
+@mixin horizontalAlign() {
+  @include ATransform(translate(-50%, 0));
+  left: 50%;
+  position: absolute;
+}
+
+@mixin CenterAlign() {
+  @include ATransform(translate(-50%, -50%));
+  left: 50%;
+  top: 50%;
+  position: absolute;
+}
+@mixin VerticalCenter(){
+  @include ATransform(translateY(-50%));
+  top: 50%;
+  position: absolute;
+}

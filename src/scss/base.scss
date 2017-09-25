@@ -1,0 +1,73 @@
+@import './mixin/container';
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+
+$default-radius: 2px;
+$default-shadow: 0 2px 20px rgba(21, 42, 55, 0.2);
+
+* {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  color: #aaa;
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  @include media('mobile'){
+    max-width: 100%;
+  }
+  @include media('tablet'){
+    max-width: 90%;
+    padding: 0 20px;
+  }
+  max-width: 1000px;
+  margin: auto;
+}
+
+.modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 11111;
+  .inner-wrapper {
+    .content {
+      box-shadow: $default-shadow;
+      @include CenterAlign();
+      background-color: #fff;
+      padding: 20 25px;
+      width: 600px;
+      @include media('mobile'){
+        max-width: 100%;
+        height: 100%;
+      } @include media('tablet'){
+        max-width: 800px;
+        height: 500px;
+        max-height: 80%;
+      } @include media('desktop'){
+        max-width: 800px;
+        height: 600px;
+        max-height: 80%;
+      }
+      
+
+    }
+  }
+}
+
+.box{
+  background-color: #fff;
+  border-radius: $default-radius;
+  //box-shadow: $default-shadow;
+  border: 1px solid rgba(0, 0, 0, .2);
+  width: 100%;
+  display: inline-block;
+  padding: 15px;
+  margin-bottom: 15px;
+}
