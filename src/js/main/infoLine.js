@@ -129,6 +129,23 @@ class InfoLine extends Component {
 		const {busInfo} = this.props; 
     return busInfo.map((group) => {
       const {title, subTitle} = group;
+      const brIndex = subTitle.indexOf('\n');
+      const isMultiline = brIndex != -1;
+      let numContent = (
+        <div className="num">
+          <h5>{subTitle}</h5>
+        </div>);
+      if(isMultiline) {
+        const firstSubTitle = subTitle.substring(0, brIndex);
+        const secondSubTitle = subTitle.substring(brIndex);
+        numContent = (
+          <div className="num">
+            <h5>{firstSubTitle}</h5>
+            <p>{secondSubTitle}</p>
+          </div>
+        );
+      }
+
       const content = group.buses.map((bus) => {
         const {busNum, busCnt, busStop, busTime, befTime, 
           befStopCnt, befStopName, nxtStat, nxtTime, nxtStopName,
@@ -220,10 +237,7 @@ class InfoLine extends Component {
                 <h1>{title}</h1>
                 <p></p>
               </div>
-              <div className="num">
-                <h5>{subTitle}</h5>
-                <p>사연 환승</p>
-              </div>
+              {numContent}
             </div>
           </section>
           <section className="content">

@@ -15331,6 +15331,36 @@ var InfoLine = function (_Component3) {
         var title = group.title,
             subTitle = group.subTitle;
 
+        var brIndex = subTitle.indexOf('\n');
+        var isMultiline = brIndex != -1;
+        var numContent = _react2.default.createElement(
+          'div',
+          { className: 'num' },
+          _react2.default.createElement(
+            'h5',
+            null,
+            subTitle
+          )
+        );
+        if (isMultiline) {
+          var firstSubTitle = subTitle.substring(0, brIndex);
+          var secondSubTitle = subTitle.substring(brIndex);
+          numContent = _react2.default.createElement(
+            'div',
+            { className: 'num' },
+            _react2.default.createElement(
+              'h5',
+              null,
+              firstSubTitle
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              secondSubTitle
+            )
+          );
+        }
+
         var content = group.buses.map(function (bus) {
           var busNum = bus.busNum,
               busCnt = bus.busCnt,
@@ -15509,20 +15539,7 @@ var InfoLine = function (_Component3) {
                 ),
                 _react2.default.createElement('p', null)
               ),
-              _react2.default.createElement(
-                'div',
-                { className: 'num' },
-                _react2.default.createElement(
-                  'h5',
-                  null,
-                  subTitle
-                ),
-                _react2.default.createElement(
-                  'p',
-                  null,
-                  '\uC0AC\uC5F0 \uD658\uC2B9'
-                )
-              )
+              numContent
             )
           ),
           _react2.default.createElement(
