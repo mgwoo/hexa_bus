@@ -99,9 +99,9 @@ class App extends Component {
     );
     return (
       <div id="content-root" className="main"
-        onMouseDown={::this.onTouchStart}
-        onMouseMove={::this.onTouchMove}
-        onMouseUp={::this.onTouchEnd}
+        onMouseDown={::this.onTouchStart.bind(this, 'mouse')}
+        onMouseMove={::this.onTouchMove.bind(this, 'mouse')}
+        onMouseUp={::this.onTouchEnd.bind(this, 'mouse')}
         onTouchStart={::this.onTouchStart.bind(this, 'touch')}
         onTouchMove={::this.onTouchMove.bind(this, 'touch')}
         onTouchEnd={::this.onTouchEnd.bind(this, 'touch')}>

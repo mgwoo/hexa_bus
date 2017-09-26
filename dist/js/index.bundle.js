@@ -15053,9 +15053,9 @@ var App = function (_Component2) {
       return _react2.default.createElement(
         'div',
         { id: 'content-root', className: 'main',
-          onMouseDown: this.onTouchStart.bind(this),
-          onMouseMove: this.onTouchMove.bind(this),
-          onMouseUp: this.onTouchEnd.bind(this),
+          onMouseDown: (_context = this.onTouchStart).bind.call(_context, this, 'mouse'),
+          onMouseMove: (_context = this.onTouchMove).bind.call(_context, this, 'mouse'),
+          onMouseUp: (_context = this.onTouchEnd).bind.call(_context, this, 'mouse'),
           onTouchStart: (_context = this.onTouchStart).bind.call(_context, this, 'touch'),
           onTouchMove: (_context = this.onTouchMove).bind.call(_context, this, 'touch'),
           onTouchEnd: (_context = this.onTouchEnd).bind.call(_context, this, 'touch') },
