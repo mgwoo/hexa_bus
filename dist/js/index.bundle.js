@@ -14991,8 +14991,12 @@ var App = function (_Component2) {
           isSwipeStart = _props2.isSwipeStart,
           dispatch = _props2.dispatch;
 
-      if (isSwipeStart && xCoordinate < 300) {
-        dispatch((0, _action.changeSwipeWidth)(xCoordinate));
+      if (isSwipeStart) {
+        if (xCoordinate > 300) {
+          dispatch((0, _action.changeSwipeWidth)(300));
+        } else {
+          dispatch((0, _action.changeSwipeWidth)(xCoordinate));
+        }
       }
     }
   }, {

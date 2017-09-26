@@ -61,8 +61,12 @@ class App extends Component {
   onTouchMove(type, e) {
     const xCoordinate = type != 'touch' ? e.clientX : e.touches[0].pageX;
     const {isSwipeStart, dispatch} = this.props;
-    if(isSwipeStart && xCoordinate < 300) {
-      dispatch(changeSwipeWidth(xCoordinate));
+    if(isSwipeStart) {
+      if(xCoordinate > 300) {
+        dispatch(changeSwipeWidth(300));
+      }else{
+        dispatch(changeSwipeWidth(xCoordinate));
+      }
     }
   }
 
