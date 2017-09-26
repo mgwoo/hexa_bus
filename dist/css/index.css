@@ -612,8 +612,12 @@ html, body {
               border-top: 1px solid rgba(0, 0, 0, 0.3); } }
           @media screen and (min-width: 691px) and (max-width: 1180px) {
             .information .direction-group .groups .content .each {
-              width: 48%;
-              margin: 1% 1% !important; } }
+              width: 49%;
+              margin: 1% 1%; }
+              .information .direction-group .groups .content .each:nth-child(2n+1) {
+                margin-left: 0; }
+              .information .direction-group .groups .content .each:nth-child(2n) {
+                margin-right: 0; } }
           @media screen and (min-width: 1181px) {
             .information .direction-group .groups .content .each:nth-child(3n+1) {
               margin-left: 0; }

@@ -230,8 +230,14 @@
             }
 					}
 					@include media('tablet') {
-						width: 48%;
-            margin: 1% 1% !important;
+						width: 49%;
+            margin: 1% 1%;
+            &:nth-child(2n+1){
+              margin-left: 0;
+            }
+            &:nth-child(2n){
+              margin-right: 0;
+            }
 					}
           @include media('desktop'){
 					  &:nth-child(3n+1){
