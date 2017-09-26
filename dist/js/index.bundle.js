@@ -14883,6 +14883,10 @@ var _infoLine = __webpack_require__(223);
 
 var _infoLine2 = _interopRequireDefault(_infoLine);
 
+var _action = __webpack_require__(554);
+
+var _config = __webpack_require__(583);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -14961,8 +14965,60 @@ var App = function (_Component2) {
   }
 
   _createClass(App, [{
+    key: 'onTouchStart',
+    value: function onTouchStart(type, e) {
+      var _props = this.props,
+          dispatch = _props.dispatch,
+          isSidebarOpen = _props.isSidebarOpen;
+
+      var xCoordinate = type != 'touch' ? e.clientX : e.touches[0].pageX;
+
+      if (xCoordinate < 20 && !isSidebarOpen) {
+        dispatch((0, _action.startSwipe)(true));
+
+        dispatch((0, _action.changeSwipeWidth)(xCoordinate));
+      }
+      if (xCoordinate > 250 && xCoordinate < 300 && isSidebarOpen) {
+        dispatch((0, _action.startSwipe)(true));
+        dispatch((0, _action.changeSwipeWidth)(xCoordinate));
+      }
+    }
+  }, {
+    key: 'onTouchMove',
+    value: function onTouchMove(type, e) {
+      var xCoordinate = type != 'touch' ? e.clientX : e.touches[0].pageX;
+      var _props2 = this.props,
+          isSwipeStart = _props2.isSwipeStart,
+          dispatch = _props2.dispatch;
+
+      if (isSwipeStart && xCoordinate < 300) {
+        dispatch((0, _action.changeSwipeWidth)(xCoordinate));
+      }
+    }
+  }, {
+    key: 'onTouchEnd',
+    value: function onTouchEnd(type, e) {
+      var xCoordinate = type != 'touch' ? e.clientX : e.changedTouches[0].pageX;
+      var _props3 = this.props,
+          isSwipeStart = _props3.isSwipeStart,
+          dispatch = _props3.dispatch;
+
+      if (isSwipeStart) {
+        if (xCoordinate > 300 * (100 - _config.SWIPE_THRESHOLD) / 100) {
+          dispatch((0, _action.changeSideBarState)(true));
+          dispatch((0, _action.changeSwipeWidth)(300));
+        } else {
+          dispatch((0, _action.changeSideBarState)(false));
+          dispatch((0, _action.changeSwipeWidth)(0));
+        }
+        dispatch((0, _action.startSwipe)(false));
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _context;
+
       var hero = _react2.default.createElement(
         'div',
         { className: 'hero', style: heroStyle },
@@ -14996,7 +15052,13 @@ var App = function (_Component2) {
       );
       return _react2.default.createElement(
         'div',
-        { id: 'content-root', className: 'main' },
+        { id: 'content-root', className: 'main',
+          onMouseDown: this.onTouchStart.bind(this),
+          onMouseMove: this.onTouchMove.bind(this),
+          onMouseUp: this.onTouchEnd.bind(this),
+          onTouchStart: (_context = this.onTouchStart).bind.call(_context, this, 'touch'),
+          onTouchMove: (_context = this.onTouchMove).bind.call(_context, this, 'touch'),
+          onTouchEnd: (_context = this.onTouchEnd).bind.call(_context, this, 'touch') },
         _react2.default.createElement(_nav2.default, null),
         _react2.default.createElement(
           'section',
@@ -15012,7 +15074,10 @@ var App = function (_Component2) {
 }(_react.Component);
 
 function mapPropsToState(state) {
-  return {};
+  return {
+    isSwipeStart: state.basicStore.isSwipeStart,
+    isSidebarOpen: state.basicStore.isSidebarOpen
+  };
 }
 
 exports.default = (0, _reactRedux.connect)(mapPropsToState)(App);
@@ -15039,7 +15104,10 @@ var initialState = {
   loadingFetch: true,
   noticeModalState: false,
   isNoticeFetched: false,
-  notices: []
+  notices: [],
+  isSwipeStart: false,
+  swipeWidth: 0,
+  isSidebarOpen: false
 };
 
 function basicStore() {
@@ -15060,6 +15128,15 @@ function basicStore() {
     case _action.FETCH_NOTICE:
       newVal['notices'] = action.notices;
       newVal['isNoticeFetched'] = true;
+      return Object.assign({}, state, newVal);
+    case _action.START_SWIPE:
+      newVal['isSwipeStart'] = action.state;
+      return Object.assign({}, state, newVal);
+    case _action.CHANGE_SWIPE_WIDTH:
+      newVal['swipeWidth'] = action.width;
+      return Object.assign({}, state, newVal);
+    case _action.CHANGE_SIDE_BAR_STATE:
+      newVal['isSidebarOpen'] = action.state;
       return Object.assign({}, state, newVal);
     default:
       return state;
@@ -15704,8 +15781,7 @@ var Navigation = function (_Component2) {
     var _this2 = _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).call(this, props));
 
     _this2.state = {
-      isScrollTop: true,
-      isBurgerActive: false
+      isScrollTop: true
     };
     return _this2;
   }
@@ -15761,9 +15837,7 @@ var Navigation = function (_Component2) {
         alert('이미 로딩중입니다.');
         return false;
       } */
-      this.setState({
-        isBurgerActive: false
-      });
+      dispatch((0, _action.changeSideBarState)(false));
       dispatch((0, _action.changeFetchLoading)(true));
       dispatch((0, _action.changeNavLoading)(true));
       var callback = function callback(response) {
@@ -15786,9 +15860,12 @@ var Navigation = function (_Component2) {
   }, {
     key: 'onHamburgerClick',
     value: function onHamburgerClick() {
-      var isBurgerActive = this.state.isBurgerActive;
+      var _props3 = this.props,
+          dispatch = _props3.dispatch,
+          isSidebarOpen = _props3.isSidebarOpen;
 
-      this.setState({ isBurgerActive: !isBurgerActive });
+
+      dispatch((0, _action.changeSideBarState)(!isSidebarOpen));
     }
   }, {
     key: 'renderMenu',
@@ -15824,14 +15901,21 @@ var Navigation = function (_Component2) {
   }, {
     key: 'render',
     value: function render() {
-      var _state = this.state,
-          isScrollTop = _state.isScrollTop,
-          isBurgerActive = _state.isBurgerActive;
-      var _props3 = this.props,
-          isLoading = _props3.isLoading,
-          noticeModalState = _props3.noticeModalState;
+      var isScrollTop = this.state.isScrollTop;
+      var _props4 = this.props,
+          swipeWidth = _props4.swipeWidth,
+          isSwipeStart = _props4.isSwipeStart,
+          isLoading = _props4.isLoading,
+          noticeModalState = _props4.noticeModalState,
+          isSidebarOpen = _props4.isSidebarOpen;
 
 
+      var sideBarOffsetX = isSwipeStart ? swipeWidth : 0;
+      var sideBarLeft = -300 + sideBarOffsetX;
+      var sideBarStyle = {};
+      if (isSwipeStart) {
+        sideBarStyle['left'] = sideBarLeft + 'px';
+      }
       return _react2.default.createElement(
         'div',
         { className: "navigation" + (isScrollTop ? '' : ' active') },
@@ -15865,7 +15949,7 @@ var Navigation = function (_Component2) {
           _react2.default.createElement(
             'div',
             { className: 'item' },
-            _react2.default.createElement(Hamburger, { isActive: isBurgerActive,
+            _react2.default.createElement(Hamburger, { isActive: isSidebarOpen,
               onClick: this.onHamburgerClick.bind(this) })
           )
         ),
@@ -15880,7 +15964,8 @@ var Navigation = function (_Component2) {
         ),
         _react2.default.createElement(
           'div',
-          { className: "side-menu" + (isBurgerActive ? ' active' : '') },
+          { style: sideBarStyle,
+            className: "side-menu" + (isSidebarOpen ? ' active' : '') + (isSwipeStart ? ' swipe' : '') },
           _react2.default.createElement(
             'div',
             { className: 'button', onClick: this.toggleNoticeModal.bind(this) },
@@ -15900,9 +15985,9 @@ var Navigation = function (_Component2) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       window.addEventListener('scroll', this.handleScroll.bind(this));
-      var _props4 = this.props,
-          isNoticeFetched = _props4.isNoticeFetched,
-          dispatch = _props4.dispatch;
+      var _props5 = this.props,
+          isNoticeFetched = _props5.isNoticeFetched,
+          dispatch = _props5.dispatch;
 
       if (!isNoticeFetched) {
         var url = 'http://hexa.hexa.pro/~lmte/bus.hexa/bus/get_ajax_inf_ohj.php?mode=notice';
@@ -15929,7 +16014,10 @@ function mapPropsToState(state) {
     loadingFetch: state.basicStore.loadingFetch,
     noticeModalState: state.basicStore.noticeModalState,
     isNoticeFetched: state.basicStore.isNoticeFetched,
-    notices: state.basicStore.notices
+    notices: state.basicStore.notices,
+    isSwipeStart: state.basicStore.isSwipeStart,
+    swipeWidth: state.basicStore.swipeWidth,
+    isSidebarOpen: state.basicStore.isSidebarOpen
   };
 }
 
@@ -34775,11 +34863,17 @@ exports.changeFetchLoading = changeFetchLoading;
 exports.changeNavLoading = changeNavLoading;
 exports.changeNoticeState = changeNoticeState;
 exports.fetchNotice = fetchNotice;
+exports.startSwipe = startSwipe;
+exports.changeSwipeWidth = changeSwipeWidth;
+exports.changeSideBarState = changeSideBarState;
 var FETCH_BUS_INFO = exports.FETCH_BUS_INFO = 'FETCH_BUS_INFO';
 var CHANGE_NAV_LOADING = exports.CHANGE_NAV_LOADING = 'CHANGE_NAV_LOADING';
 var CHANGE_FETCH_LOADING = exports.CHANGE_FETCH_LOADING = 'CHANGE_FETCH_LOADING';
 var CHANGE_NOTICE_STATE = exports.CHANGE_NOTICE_STATE = 'CHANGE_NOTICE_STATE';
 var FETCH_NOTICE = exports.FETCH_NOTICE = 'FETCH_NOTICE';
+var START_SWIPE = exports.START_SWIPE = 'START_SWIPE';
+var CHANGE_SWIPE_WIDTH = exports.CHANGE_SWIPE_WIDTH = 'CHANGE_SWIPE_WIDTH';
+var CHANGE_SIDE_BAR_STATE = exports.CHANGE_SIDE_BAR_STATE = 'CHANGE_SIDE_BAR_STATE';
 
 function fetchBusInfo(info) {
   return {
@@ -34813,6 +34907,27 @@ function fetchNotice(notices) {
   return {
     type: FETCH_NOTICE,
     notices: notices
+  };
+}
+
+function startSwipe(state) {
+  return {
+    type: START_SWIPE,
+    state: state
+  };
+}
+
+function changeSwipeWidth(width) {
+  return {
+    type: CHANGE_SWIPE_WIDTH,
+    width: width
+  };
+}
+
+function changeSideBarState(state) {
+  return {
+    type: CHANGE_SIDE_BAR_STATE,
+    state: state
   };
 }
 
@@ -36451,6 +36566,10 @@ function isSlowBuffer (obj) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+/*Navigation Side bar Opening Threshold*/
+var SWIPE_THRESHOLD = exports.SWIPE_THRESHOLD = 50;
+
 var stopMenu = exports.stopMenu = [{
   type: 1,
   name: 'UNIST',

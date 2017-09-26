@@ -296,6 +296,13 @@ html, body {
       line-height: initial;
       color: #343434;
       border-bottom: 1px solid #ccc; }
+    .navigation .side-menu.swipe {
+      will-change: auto;
+      transition: 0ms;
+      -o-transition: 0ms;
+      -moz-transition: 0ms;
+      -ms-transition: 0ms;
+      -webkit-transition: 0ms; }
     .navigation .side-menu.active {
       left: 0; }
   .navigation .loading {

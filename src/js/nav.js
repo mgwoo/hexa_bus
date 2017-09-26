@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchBusInfo, changeNavLoading, 
-  changeFetchLoading, changeNoticeState, fetchNotice} from './main/redux/action';
+import {fetchBusInfo, changeNavLoading, changeSideBarState,
+  changeFetchLoading, changeNoticeState, fetchNotice,} from './main/redux/action';
 import {stopMenu} from './main/config';
 import {getFetch} from './main/async_get';
 import Modal from './main/modal';
@@ -30,7 +30,6 @@ class Navigation extends Component {
 
     this.state = {
       isScrollTop: true,
-      isBurgerActive: false,
     };
   }
 
@@ -41,7 +40,7 @@ class Navigation extends Component {
     const {dispatch, noticeModalState} = this.props;
     dispatch(changeNoticeState(!noticeModalState));
   }
-  
+
   renderNotice() {
     const {notices} = this.props;
     return notices.map((notice) => {
@@ -67,9 +66,7 @@ class Navigation extends Component {
       alert('이미 로딩중입니다.');
       return false;
     } */
-    this.setState({
-      isBurgerActive: false,
-    });
+    dispatch(changeSideBarState(false));
     dispatch(changeFetchLoading(true));
     dispatch(changeNavLoading(true));
     const callback = (response) => {
@@ -90,8 +87,9 @@ class Navigation extends Component {
   }
 
   onHamburgerClick() {
-    const {isBurgerActive} = this.state;
-    this.setState({isBurgerActive: !isBurgerActive});
+    const {dispatch, isSidebarOpen} = this.props;
+    
+    dispatch(changeSideBarState(!isSidebarOpen));
   }
 
   renderMenu() {
@@ -118,9 +116,16 @@ class Navigation extends Component {
     ::this.toggleNoticeModal();
   }
   render() {
-    const {isScrollTop, isBurgerActive} = this.state;
-    const {isLoading, noticeModalState} = this.props;
+    const {isScrollTop} = this.state;
+    const {swipeWidth, isSwipeStart, 
+      isLoading, noticeModalState, isSidebarOpen} = this.props;
     
+    const sideBarOffsetX = isSwipeStart ? swipeWidth : 0;
+    const sideBarLeft = -300 + sideBarOffsetX;
+    let sideBarStyle = {};
+    if(isSwipeStart) {
+      sideBarStyle['left'] = sideBarLeft + 'px';
+    }
     return (
       <div className={"navigation"+(isScrollTop ? '' : ' active') }>
         <Modal show={noticeModalState} outsideClick={::this.onModalOutsideClick}>
@@ -140,7 +145,7 @@ class Navigation extends Component {
         </Modal>
         <section className="left-align">
           <div className="item">
-            <Hamburger isActive={isBurgerActive} 
+            <Hamburger isActive={isSidebarOpen} 
               onClick={::this.onHamburgerClick}/>
           </div>
         </section>
@@ -149,7 +154,8 @@ class Navigation extends Component {
             HeXA.Bus
           </div>
         </section>
-        <div className={"side-menu"+(isBurgerActive ? ' active' : '')}>
+        <div style={sideBarStyle} 
+          className={"side-menu"+(isSidebarOpen ? ' active' : '') + (isSwipeStart? ' swipe' : '')}>
           <div className="button" onClick={::this.toggleNoticeModal}>
             Notice
           </div>
@@ -189,6 +195,9 @@ function mapPropsToState(state) {
     noticeModalState: state.basicStore.noticeModalState,
     isNoticeFetched: state.basicStore.isNoticeFetched,
     notices: state.basicStore.notices,
+    isSwipeStart: state.basicStore.isSwipeStart,
+    swipeWidth: state.basicStore.swipeWidth,
+    isSidebarOpen: state.basicStore.isSidebarOpen
   }
 }
 

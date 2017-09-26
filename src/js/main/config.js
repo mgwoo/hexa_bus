@@ -1,3 +1,7 @@
+
+/*Navigation Side bar Opening Threshold*/
+export const SWIPE_THRESHOLD = 50;
+
 export const stopMenu = [{
     type: 1,
     name: 'UNIST',

@@ -215,6 +215,9 @@ $transition-speed: 300ms;
       border-bottom: 1px solid #ccc;
     }
     @include ATransition($transition-speed);
+    &.swipe {
+      @include ATransition(0ms);
+    }
     &.active {
       left: 0;
     }

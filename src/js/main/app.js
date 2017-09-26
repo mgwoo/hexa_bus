@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 
 import Nav from '../nav';
 import InfoLine from './infoLine';
+import {changeSwipeWidth, startSwipe, changeSideBarState} from './redux/action';
+import {SWIPE_THRESHOLD} from './config';
 
 const heroStyle = {
   backgroundImage: 'url(hero.jpg)',
@@ -39,6 +41,46 @@ class App extends Component {
     
   }
 
+  onTouchStart(type, e) {
+    const {dispatch, isSidebarOpen} = this.props;
+    const xCoordinate = type != 'touch' ? e.clientX : e.touches[0].pageX;
+
+    if(xCoordinate < 20 && !isSidebarOpen) {
+      dispatch(startSwipe(true));
+
+      dispatch(changeSwipeWidth(xCoordinate));
+    }
+    if(xCoordinate > 250 
+      && xCoordinate < 300
+      && isSidebarOpen) {
+        dispatch(startSwipe(true));
+        dispatch(changeSwipeWidth(xCoordinate));
+    }
+  }
+  
+  onTouchMove(type, e) {
+    const xCoordinate = type != 'touch' ? e.clientX : e.touches[0].pageX;
+    const {isSwipeStart, dispatch} = this.props;
+    if(isSwipeStart && xCoordinate < 300) {
+      dispatch(changeSwipeWidth(xCoordinate));
+    }
+  }
+
+  onTouchEnd(type, e) {
+    const xCoordinate = type != 'touch' ? e.clientX : e.changedTouches[0].pageX;
+    const {isSwipeStart, dispatch} = this.props;
+    if(isSwipeStart) {
+      if(xCoordinate > 300 * (100 - SWIPE_THRESHOLD)/100) {
+        dispatch(changeSideBarState(true));
+        dispatch(changeSwipeWidth(300));
+      }else{
+        dispatch(changeSideBarState(false));
+        dispatch(changeSwipeWidth(0));
+      }
+      dispatch(startSwipe(false));
+    }
+  }
+
   render() {
      const hero = (
        <div className="hero" style={heroStyle}>
@@ -56,7 +98,13 @@ class App extends Component {
         </div>
     );
     return (
-      <div id="content-root" className="main">
+      <div id="content-root" className="main"
+        onMouseDown={::this.onTouchStart}
+        onMouseMove={::this.onTouchMove}
+        onMouseUp={::this.onTouchEnd}
+        onTouchStart={::this.onTouchStart.bind(this, 'touch')}
+        onTouchMove={::this.onTouchMove.bind(this, 'touch')}
+        onTouchEnd={::this.onTouchEnd.bind(this, 'touch')}>
         <Nav/>
         <section className="information">
           <InfoLine/>
@@ -68,7 +116,8 @@ class App extends Component {
 
 function mapPropsToState(state) {
   return {
-    
+    isSwipeStart: state.basicStore.isSwipeStart,
+    isSidebarOpen: state.basicStore.isSidebarOpen,
   };
 }
 
