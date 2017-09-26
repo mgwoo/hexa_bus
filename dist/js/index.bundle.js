@@ -15756,11 +15756,11 @@ var Navigation = function (_Component2) {
       var dispatch = this.props.dispatch;
 
       var url = 'http://hexa.hexa.pro/~lmte/bus.hexa/bus/get_ajax_inf_ohj.php?mode=' + mode;
-
-      if (loadingFetch) {
+      /* Deprecated
+      if(loadingFetch) {
         alert('이미 로딩중입니다.');
         return false;
-      }
+      } */
       this.setState({
         isBurgerActive: false
       });
