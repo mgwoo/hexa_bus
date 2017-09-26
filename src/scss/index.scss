@@ -155,12 +155,16 @@
           padding: 15px 20px;
           display: inline-block;
           width: 35%;
+          @include media('mobile') {
+            width: 50%;
+          }
           h1 {
             color: #f4f4f4;
             margin: 0 0 3px 0;
             font-size: 30px;
             @include media('mobile') {
               font-size: 17px;
+
             }
           }
           p {
@@ -176,6 +180,9 @@
           padding: 15px 20px;
           padding-bottom: 0;
           width: 65%;
+          @include media('mobile') {
+            width: 50%;
+          }
           h5 {
             margin: 0 0 2px 0;
             font-size: 18px;

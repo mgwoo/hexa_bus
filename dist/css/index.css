@@ -549,6 +549,9 @@ html, body {
           padding: 15px 20px;
           display: inline-block;
           width: 35%; }
+          @media screen and (max-width: 690px) {
+            .information .direction-group .groups .title .name {
+              width: 50%; } }
           .information .direction-group .groups .title .name h1 {
             color: #f4f4f4;
             margin: 0 0 3px 0;
@@ -567,6 +570,9 @@ html, body {
           padding: 15px 20px;
           padding-bottom: 0;
           width: 65%; }
+          @media screen and (max-width: 690px) {
+            .information .direction-group .groups .title .num {
+              width: 50%; } }
           .information .direction-group .groups .title .num h5 {
             margin: 0 0 2px 0;
             font-size: 18px;
