@@ -143,7 +143,7 @@ class InfoLine extends Component {
                       (
                       <p>
                         <span>{befStopName}</span>
-                         ({befStopCnt} 정거장 전)
+                         ({befStopCnt} 전)
                       </p>)
                       }
                   </div>

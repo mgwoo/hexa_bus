@@ -15368,7 +15368,7 @@ var InfoLine = function (_Component3) {
               ),
               '(',
               befStopCnt,
-              ' \uC815\uAC70\uC7A5 \uC804)'
+              ' \uC804)'
             )
           );
           var nextInfo = typeof nxtStat !== null && typeof nxtStat != 'undefined' ? _react2.default.createElement(
