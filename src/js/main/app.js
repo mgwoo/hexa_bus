@@ -14,6 +14,11 @@ class Footer extends Component {
   }
 
   render() {
+    const codeFooter = (
+      <section className="under-group">
+        you can check detail code on <a href="#">here</a>
+      </section>
+    );
     return (
       <div className="footer">
         <section className="upper-group">
@@ -22,9 +27,6 @@ class Footer extends Component {
           <h5>Operated by HeXA</h5>
           <p>Copyright (C) 2017 HeXA all rights reserved.</p>
  
-        </section>
-        <section className="under-group">
-          You can check detail code on <a href="#">here</a>
         </section>
       </div>
     );

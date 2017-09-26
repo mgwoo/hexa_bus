@@ -14907,6 +14907,16 @@ var Footer = function (_Component) {
   _createClass(Footer, [{
     key: 'render',
     value: function render() {
+      var codeFooter = _react2.default.createElement(
+        'section',
+        { className: 'under-group' },
+        'you can check detail code on ',
+        _react2.default.createElement(
+          'a',
+          { href: '#' },
+          'here'
+        )
+      );
       return _react2.default.createElement(
         'div',
         { className: 'footer' },
@@ -14932,16 +14942,6 @@ var Footer = function (_Component) {
             'p',
             null,
             'Copyright (C) 2017 HeXA all rights reserved.'
-          )
-        ),
-        _react2.default.createElement(
-          'section',
-          { className: 'under-group' },
-          'You can check detail code on ',
-          _react2.default.createElement(
-            'a',
-            { href: '#' },
-            'here'
           )
         )
       );
