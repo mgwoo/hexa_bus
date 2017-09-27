@@ -263,6 +263,32 @@ $transition-speed: 300ms;
     left: 100%;
   }
 }
+
+.kakao-share {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-color: rgb(255, 220, 0);
+  left: 10px;
+  bottom: 15px;
+  box-shadow: 0 2px 15px rgba(0,0,0, .5);
+  cursor: pointer;
+  @include ATransition(200ms);
+  @include media('desktop') {
+    &:active {
+      @include ATransform(translateY(2px));
+    }
+  }
+  img {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    width: 24px;
+    height: 24px;
+  }
+}
+
 .goto-top {
   position: fixed;
   width: 40px;
@@ -271,7 +297,7 @@ $transition-speed: 300ms;
   background-color: #6facd5;
   right: 10px;
   bottom: 15px;
-  box-shadow: $default-shadow;
+  box-shadow: 0 2px 15px rgba(0,0,0, .5);
   cursor: pointer;
   @include ATransition(200ms);
   @include media('desktop') {
@@ -292,3 +318,4 @@ $transition-speed: 300ms;
   }
   
 }
+

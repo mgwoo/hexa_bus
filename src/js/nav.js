@@ -131,6 +131,22 @@ class Navigation extends Component {
   onModalOutsideClick() {
     ::this.toggleNoticeModal();
   }
+
+  shareKaKaoTalk() {
+    Kakao.Link.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: 'HeXA Bus',
+        description: '편하게 보는 유니스트 버스정보.',
+        imageUrl: 'http://i4.mirror.co.uk/incoming/article10829534.ece/ALTERNATES/s615b/SWNS_SPIDER_STOP_1.jpg',
+        link: {
+          webUrl: 'http://bus.hexa.pro',
+          mobileWebUrl: 'http://bus.hexa.pro',
+        },
+      },
+    });
+  }
+
   render() {
     const {isScrollTop} = this.state;
     const {swipeWidth, isSwipeStart, 
@@ -181,12 +197,17 @@ class Navigation extends Component {
           <div className="indicator">
           </div>
         </div>
+        <div className="kakao-share" onClick={::this.shareKaKaoTalk}>
+          <img src="kakao.png"/>
+        </div>
         <div className="goto-top" onClick={::this.gotoTop}>
         </div>
       </div>);
   }
   
   componentDidMount() {
+    Kakao.init('3b2fbd685845f6a067bebc7095aa69f5');
+
     window.addEventListener('scroll', ::this.handleScroll);
     const {isNoticeFetched, dispatch} = this.props;
     if(!isNoticeFetched) {

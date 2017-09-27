@@ -18174,6 +18174,22 @@ var Navigation = function (_Component3) {
       this.toggleNoticeModal.call(this);
     }
   }, {
+    key: 'shareKaKaoTalk',
+    value: function shareKaKaoTalk() {
+      Kakao.Link.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: 'HeXA Bus',
+          description: '편하게 보는 유니스트 버스정보.',
+          imageUrl: 'http://i4.mirror.co.uk/incoming/article10829534.ece/ALTERNATES/s615b/SWNS_SPIDER_STOP_1.jpg',
+          link: {
+            webUrl: 'http://bus.hexa.pro',
+            mobileWebUrl: 'http://bus.hexa.pro'
+          }
+        }
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var isScrollTop = this.state.isScrollTop;
@@ -18253,12 +18269,19 @@ var Navigation = function (_Component3) {
           { className: "loading" + (isLoading ? ' active' : '') },
           _react2.default.createElement('div', { className: 'indicator' })
         ),
+        _react2.default.createElement(
+          'div',
+          { className: 'kakao-share', onClick: this.shareKaKaoTalk.bind(this) },
+          _react2.default.createElement('img', { src: 'kakao.png' })
+        ),
         _react2.default.createElement('div', { className: 'goto-top', onClick: this.gotoTop.bind(this) })
       );
     }
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
+      Kakao.init('3b2fbd685845f6a067bebc7095aa69f5');
+
       window.addEventListener('scroll', this.handleScroll.bind(this));
       var _props5 = this.props,
           isNoticeFetched = _props5.isNoticeFetched,
