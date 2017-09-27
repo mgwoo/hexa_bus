@@ -24,6 +24,22 @@ class Hamburger extends Component {
   }
 }
 
+export class HeXASVG extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" 
+        className="logo-svg" width="150" height="50">
+        <text textAnchor="middle" x="80" y="42"> HeXA Bus</text>
+        <text textAnchor="middle" className="animate" x="80" y="42">HeXA Bus</text>
+      </svg>
+    );
+  }
+}
+
 class Navigation extends Component {
   constructor(props) {
     super(props);
@@ -151,7 +167,7 @@ class Navigation extends Component {
         </section>
         <section className="center-align">
           <div className="item">
-            HeXA.Bus
+            <HeXASVG/>
           </div>
         </section>
         <div style={sideBarStyle} 

@@ -15358,7 +15358,7 @@ var LoadingIcon = function (_Component2) {
           } else if (!backward) {
             iterate(i + 1);
           }
-        }, 7);
+        }, 5);
       };
       iterate(1);
     }
@@ -15381,7 +15381,7 @@ var LoadingIcon = function (_Component2) {
       return _react2.default.createElement(
         'svg',
         { width: '50', height: '50', xmlns: 'http://www.w3.org/2000/svg' },
-        _react2.default.createElement('path', { ref: refF, style: animatedStyle, className: 'loading-icon', d: 'M10 10 L10 30 M10 30 C13 45, 37 45, 40 30 M40 30 L40 10', stroke: '#6facd5', fill: 'transparent', 'stroke-width': '2' })
+        _react2.default.createElement('path', { ref: refF, style: animatedStyle, className: 'loading-icon', d: 'M10 10 L10 30 M10 30 C13 45, 37 45, 40 30 M40 30 L40 10', stroke: '#6facd5', fill: 'transparent' })
       );
     }
   }, {
@@ -15506,7 +15506,7 @@ var InfoLine = function (_Component3) {
               ),
               '(',
               nxtStopCnt,
-              ' \uC815\uAC70\uC7A5 \uC804)'
+              ' \uC804)'
             )
           ) : _react2.default.createElement(
             'div',
@@ -15719,6 +15719,7 @@ exports.default = (0, _reactRedux.connect)(mapPropsToState)(InfoLine);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.HeXASVG = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -15776,18 +15777,51 @@ var Hamburger = function (_Component) {
   return Hamburger;
 }(_react.Component);
 
-var Navigation = function (_Component2) {
-  _inherits(Navigation, _Component2);
+var HeXASVG = exports.HeXASVG = function (_Component2) {
+  _inherits(HeXASVG, _Component2);
+
+  function HeXASVG(props) {
+    _classCallCheck(this, HeXASVG);
+
+    return _possibleConstructorReturn(this, (HeXASVG.__proto__ || Object.getPrototypeOf(HeXASVG)).call(this, props));
+  }
+
+  _createClass(HeXASVG, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'svg',
+        { xmlns: 'http://www.w3.org/2000/svg',
+          className: 'logo-svg', width: '150', height: '50' },
+        _react2.default.createElement(
+          'text',
+          { textAnchor: 'middle', x: '80', y: '42' },
+          ' HeXA Bus'
+        ),
+        _react2.default.createElement(
+          'text',
+          { textAnchor: 'middle', className: 'animate', x: '80', y: '42' },
+          'HeXA Bus'
+        )
+      );
+    }
+  }]);
+
+  return HeXASVG;
+}(_react.Component);
+
+var Navigation = function (_Component3) {
+  _inherits(Navigation, _Component3);
 
   function Navigation(props) {
     _classCallCheck(this, Navigation);
 
-    var _this2 = _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).call(this, props));
+    var _this3 = _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).call(this, props));
 
-    _this2.state = {
+    _this3.state = {
       isScrollTop: true
     };
-    return _this2;
+    return _this3;
   }
 
   _createClass(Navigation, [{
@@ -15874,7 +15908,7 @@ var Navigation = function (_Component2) {
   }, {
     key: 'renderMenu',
     value: function renderMenu() {
-      var _this3 = this;
+      var _this4 = this;
 
       return _config.stopMenu.map(function (each) {
         var type = each.type,
@@ -15885,7 +15919,7 @@ var Navigation = function (_Component2) {
           case 0:
             return _react2.default.createElement(
               'div',
-              { className: 'button', onClick: _this3.fetchBusInfo.bind(_this3, param) },
+              { className: 'button', onClick: _this4.fetchBusInfo.bind(_this4, param) },
               name
             );
           case 1:
@@ -15963,7 +15997,7 @@ var Navigation = function (_Component2) {
           _react2.default.createElement(
             'div',
             { className: 'item' },
-            'HeXA.Bus'
+            _react2.default.createElement(HeXASVG, null)
           )
         ),
         _react2.default.createElement(

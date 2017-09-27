@@ -95,7 +95,7 @@ class LoadingIcon extends Component {
         }else if(!backward) {
           iterate(i+1);
         }
-      }, 7);
+      }, 5);
     }
     iterate(1);
   }
@@ -111,7 +111,7 @@ class LoadingIcon extends Component {
     };
     return (
       <svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"> 
-        <path ref={refF} style={animatedStyle} className="loading-icon" d="M10 10 L10 30 M10 30 C13 45, 37 45, 40 30 M40 30 L40 10" stroke="#6facd5" fill="transparent" stroke-width="2"/>
+        <path ref={refF} style={animatedStyle} className="loading-icon" d="M10 10 L10 30 M10 30 C13 45, 37 45, 40 30 M40 30 L40 10" stroke="#6facd5" fill="transparent"/>
       </svg>
     );
   }
@@ -175,7 +175,7 @@ class InfoLine extends Component {
           (<p>기점출발예정</p>):
             (<p>
               <span>{nxtStopName}</span>
-              ({nxtStopCnt} 정거장 전)
+              ({nxtStopCnt} 전)
             </p>)
           }
           </div>) :
