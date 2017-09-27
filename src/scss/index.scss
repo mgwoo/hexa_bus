@@ -301,14 +301,17 @@
               &:last-child {
                 border-bottom: 0px;
               }
+              > * {
+                vertical-align: middle;
+              }
               > div {
                 color: #565656;
                 width: 50%;
                 display: inline-block;
               }
               > p {
-                
                 span {
+                  display: block;
                   font-weight: 600;
                   color: #343434;
                 }

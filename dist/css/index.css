@@ -674,6 +674,8 @@ html, body {
               padding: 7px 10px; }
               .information .direction-group .groups .content .each .bus-info .this:last-child, .information .direction-group .groups .content .each .bus-info .next:last-child {
                 border-bottom: 0px; }
+              .information .direction-group .groups .content .each .bus-info .this > *, .information .direction-group .groups .content .each .bus-info .next > * {
+                vertical-align: middle; }
               .information .direction-group .groups .content .each .bus-info .this > div, .information .direction-group .groups .content .each .bus-info .next > div {
                 color: #565656;
                 width: 50%;
@@ -685,6 +687,7 @@ html, body {
                 text-align: right;
                 display: inline-block; }
                 .information .direction-group .groups .content .each .bus-info .this > p span, .information .direction-group .groups .content .each .bus-info .next > p span {
+                  display: block;
                   font-weight: 600;
                   color: #343434; }
                 @media screen and (min-width: 691px) and (max-width: 1180px) {
