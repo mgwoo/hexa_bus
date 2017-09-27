@@ -12,7 +12,7 @@ module.exports = [
         },
 
         output: {
-            path: __dirname + '/dist/js/',
+            path: __dirname + '/public/dist/js/',
             filename: '[name].bundle.js'
         },
 
@@ -44,7 +44,7 @@ module.exports = [
         },
 
         output: {
-            path: __dirname + '/dist/css',
+            path: __dirname + '/public/dist/css',
             filename: '[name].css',
         },
         module: {
